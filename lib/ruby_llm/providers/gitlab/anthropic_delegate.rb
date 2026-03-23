@@ -2,9 +2,9 @@
 
 module RubyLLM
   module Providers
-    module GitLab
-      class Anthropic < RubyLLM::Providers::Anthropic
-        include GitLab::Chat
+    class GitLab
+      class AnthropicDelegate < RubyLLM::Providers::Anthropic
+        include RubyLLM::Providers::GitLab::Chat
 
         def api_base
           token_manager.anthropic_base_url
@@ -25,20 +25,12 @@ module RubyLLM
         end
 
         class << self
-          def slug
-            'gitlab_anthropic'
-          end
-
-          def configuration_options
-            %i[gitlab_api_key gitlab_instance_url gitlab_gateway_url]
-          end
-
           def configuration_requirements
             %i[gitlab_api_key]
           end
 
-          def assume_models_exist?
-            true
+          def configuration_options
+            %i[gitlab_api_key gitlab_instance_url gitlab_gateway_url]
           end
         end
 
