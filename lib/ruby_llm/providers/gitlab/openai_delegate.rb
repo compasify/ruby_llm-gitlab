@@ -2,9 +2,9 @@
 
 module RubyLLM
   module Providers
-    module GitLab
-      class OpenAI < RubyLLM::Providers::OpenAI
-        include GitLab::Chat
+    class GitLab
+      class OpenAIDelegate < RubyLLM::Providers::OpenAI
+        include RubyLLM::Providers::GitLab::Chat
 
         def api_base
           token_manager.openai_base_url
@@ -24,20 +24,12 @@ module RubyLLM
         end
 
         class << self
-          def slug
-            'gitlab_openai'
-          end
-
-          def configuration_options
-            %i[gitlab_api_key gitlab_instance_url gitlab_gateway_url]
-          end
-
           def configuration_requirements
             %i[gitlab_api_key]
           end
 
-          def assume_models_exist?
-            true
+          def configuration_options
+            %i[gitlab_api_key gitlab_instance_url gitlab_gateway_url]
           end
         end
 

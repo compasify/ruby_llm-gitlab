@@ -4,12 +4,11 @@ require 'delegate'
 
 module RubyLLM
   module Providers
-    module GitLab
+    class GitLab
       module Chat
-        def render_payload(messages, tools:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil, tool_prefs: nil)
-          proxy = ModelIdProxy.new(model)
-          super(messages, tools: tools, temperature: temperature, model: proxy,
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
+                           thinking: nil, tool_prefs: nil)
+          super(messages, tools: tools, temperature: temperature, model: ModelIdProxy.new(model),
                 stream: stream, schema: schema, thinking: thinking, tool_prefs: tool_prefs)
         end
       end
